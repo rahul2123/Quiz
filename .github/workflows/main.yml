@@ -10,6 +10,6 @@ jobs:
         approvals: 2
         check_changes_requested: false
       env:
-        GITHUB_TOKEN: echo "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"
+        GITHUB_TOKEN: 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
     - run: echo "Approved !!"
       if: ${{ steps.approved.outputs.approved == 'true' }}
