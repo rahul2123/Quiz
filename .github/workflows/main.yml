@@ -4,12 +4,12 @@ jobs:
   myJob:
     runs-on: ubuntu-latest
     steps:
-    - uses: luisrjaeger/approved-event-checker@v1.0.0
+    - uses: rahul2123/approved-event-checker
       id: approved
       with:
         approvals: 2
         check_changes_requested: false
       env:
-        GITHUB_TOKEN: echo "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"
+        GITHUB_TOKEN: '${{ secrets.PR_TOKEN }}'
     - run: echo "Approved !!"
       if: ${{ steps.approved.outputs.approved == 'true' }}
