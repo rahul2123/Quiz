@@ -1,5 +1,5 @@
 on: pull_request_review
-name: Example Job
+name: PR review
 jobs:
   myJob:
     runs-on: ubuntu-latest
