@@ -5,7 +5,7 @@ jobs:
   myJob:
     runs-on: ubuntu-latest
     steps:
-      - uses: rahul2123/approved-event-checker@v1.0.0
+      - uses: rahul2123/approved-event-checker
         id: approved
         with:
           approvals: 2
