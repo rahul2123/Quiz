@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [review_requested]
+    types: [opened]
 jobs:
   name: PR Check
   myJob:
