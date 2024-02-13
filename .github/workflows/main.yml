@@ -1,6 +1,8 @@
-'on': pull_request_review
-name: PR Check
+on:
+  pull_request:
+    types: [review_requested]
 jobs:
+  name: PR Check
   myJob:
     runs-on: ubuntu-latest
     steps:
