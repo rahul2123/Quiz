@@ -1,15 +1,16 @@
-on: pull_request_review
-name: Example Job
+on:
+  pull_request:
+    types: [opened]
 jobs:
   myJob:
     runs-on: ubuntu-latest
     steps:
-    - uses: rahul2123/approved-event-checker
-      id: approved
-      with:
-        approvals: 2
-        check_changes_requested: false
-      env:
-        GITHUB_TOKEN: '${{ secrets.PR_TOKEN }}'
-    - run: echo "Approved !!"
-      if: ${{ steps.approved.outputs.approved == 'true' }}
+      - uses: rahul2123/approved-event-checker
+        id: approved
+        with:
+          approvals: 2
+          check_changes_requested: false
+        env:
+          GITHUB_TOKEN: '${{ secrets.PR_TOKEN }}'
+      - run: echo "Approved !!"
+        if: '${{ steps.approved.outputs.approved == ''true'' }}'
