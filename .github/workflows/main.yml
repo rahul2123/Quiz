@@ -1,5 +1,6 @@
-on: pull_request_review
-name: Example Job
+on:
+  pull_request:
+    types: [opened]
 jobs:
   myJob:
     runs-on: ubuntu-latest
