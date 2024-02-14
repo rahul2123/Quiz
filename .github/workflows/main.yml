@@ -1,34 +1,16 @@
-name: Check Approvals
-
-on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
-
+on: pull_request_review
+name: Multi Approved Example Job
 jobs:
-  check-approvals:
+  onApprovedSubmit:
+    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check PR Approvals
-        run: |
-          PR_NUMBER=$(echo "${{ github.event.number }}")
-          REPO_OWNER=$(echo "${{ github.repository_owner }}")
-          REPO_NAME=$(echo "${{ github.repository }}")
-          TOKEN=${{ secrets.GITHUB_TOKEN }}
-          
-          APPROVALS=$(curl -s -H "Authorization: Bearer $TOKEN" \
-                       -H "Accept: application/vnd.github.v3+json" \
-                       "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/pulls/$PR_NUMBER/reviews" | \
-                       jq '.[] | select(.state == "APPROVED")')
-
-          if [ -z "$APPROVALS" ]; then
-            echo "At least one approval is required."
-            exit 1
-          else
-            echo "PR has at least one approval."
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.PR_TOKEN }}
+    - uses: sakhnovict/multi-approved-event-action@1.0.9
+      id: approved
+      with:
+        approvalsCount: '2'
+        onlyEqual: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.PR_TOKEN }}
+    - run: echo "Approved 2 times."
+      if: steps.approved.outputs.isApproved == 'true'
