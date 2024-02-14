@@ -1,15 +1,15 @@
-on: pull_request_review
-name: Multi Approved Example Job
+name: Required Reviews
+on:
+  pull_request: {}
+  pull_request_review: {}
 jobs:
-  onApprovedSubmit:
-    if: github.event.review.state == 'approved'
+  required-reviews:
+    name: Required Reviews
     runs-on: ubuntu-latest
     steps:
-    - uses: sakhnovict/multi-approved-event-action@1.0.9
-      id: approved
-      with:
-        approvalsCount: 2
-      env:
-        GITHUB_TOKEN: ${{ secrets.PR_TOKEN }}
-    - run: echo "Approved 2 times."
-      if: steps.approved.outputs.isApproved == 'true'
+      - name: required-reviewers
+        uses: theoremlp/required-reviews@v2
+        with:
+          github-token: ${{ secrets.PR_TOKEN }}
+          # Optional: post a review on the PR instead of failing the task when requirements haven't been satisfied
+          # post-review: true
