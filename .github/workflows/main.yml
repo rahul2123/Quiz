@@ -21,10 +21,11 @@ jobs:
           
           APPROVALS=$(curl -s -H "Authorization: Bearer $TOKEN" \
                        -H "Accept: application/vnd.github.v3+json" \
-                       "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/pulls/$PR_NUMBER/reviews" | \
-                       jq '.[] | select(.state == "APPROVED")')
+                       "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/pulls/$PR_NUMBER/reviews")
 
-          if [ -z "$APPROVALS" ]; then
+          APPROVAL_COUNT=$(echo "$APPROVALS" | jq '[.[] | select(.state == "APPROVED")] | length')
+
+          if [ "$APPROVAL_COUNT" -eq 0 ]; then
             echo "At least one approval is required."
             exit 1
           else
