@@ -1,0 +1,17 @@
+{
+    "teams": {
+      "everyone": {
+        "description": "a team that contains all users",
+        "users": [
+          "sumit10"
+        ]
+      }
+    },
+    "reviewers": {
+        "": {
+            "description": "Require at least one approval on every file from the everyone team",
+            "teams": ["everyone"],
+            "requiredApproverCount": 1
+        }
+    }
+}
